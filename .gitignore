@@ -1,1 +1,3 @@
-**.local/venv
+**venv
+**.DS_Store
+.vscode

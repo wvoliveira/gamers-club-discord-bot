@@ -3,11 +3,29 @@ import requests
 
 url = "https://discord.com/api/v8/applications/964723752531284068/guilds/910359107582693436/commands"
 
-# This is an example USER command, with a type of 2
 json = {
     "name": "demo",
     "type": 1,
-    "description": "Parse and analyse demos (aka replays)."
+    "description": "Parse and analyse demos (aka replays).",
+    "options": [
+        {
+            "name": "match",
+            "description": "Match number. Ex.: 15693476",
+            "type": 4,
+            "required": True
+        }
+    ],
+    "name": "match",
+        "type": 1,
+        "description": "Get basic information from match.",
+        "options": [
+            {
+                "name": "match",
+                "description": "Match number. Ex.: 15693476",
+                "type": 4,
+                "required": True
+            }
+        ]
 }
 
 # For authorization, you can use either your bot token
