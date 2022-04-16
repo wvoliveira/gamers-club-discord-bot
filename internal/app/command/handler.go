@@ -1,36 +1,13 @@
-package main
+package command
 
 import (
-	"flag"
 	"fmt"
-	"log"
-	"os"
-	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-// Bot parameters
-var (
-	BotToken = flag.String("t", "", "Bot access token")
-)
-
-var s *discordgo.Session
-
-func init() { flag.Parse() }
-
-func init() {
-	var err error
-	s, err = discordgo.New("Bot " + *BotToken)
-	if err != nil {
-		log.Fatalf("Invalid bot parameters: %v", err)
-	}
-}
-
-var (
-	integerOptionMinValue = 1.0
-
-	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
+func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	return map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"match": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			// Access options in the order provided by the user.
 			options := i.ApplicationCommandData().Options
@@ -44,11 +21,22 @@ var (
 			// This example stores the provided arguments in an []interface{}
 			// which will be used to format the bot's response
 			margs := make([]interface{}, 0, len(options))
-			msgformat := "Match\n"
+			msgformat := ""
 
-			if opt, ok := optionMap["match"]; ok {
+			var match_id int
+			if opt, ok := optionMap["match_id"]; ok {
 				margs = append(margs, opt.IntValue())
-				msgformat += "> %d\n"
+				match_id = int(opt.IntValue())
+				msgformat += "Match %d\n"
+			}
+
+			fmt.Printf("Margs: %d\n", margs)
+			fmt.Printf("Match ID: %d\n", match_id)
+
+			m, err := MatchResult(match_id)
+			if err == nil {
+				margs = append(margs, m.Status)
+				msgformat += "> Status: %s\n"
 			}
 
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -77,10 +65,12 @@ var (
 			margs := make([]interface{}, 0, len(options))
 			msgformat := "Demo\n"
 
-			if opt, ok := optionMap["match"]; ok {
+			if opt, ok := optionMap["match_id"]; ok {
 				margs = append(margs, opt.IntValue())
 				msgformat += "> %d\n"
 			}
+
+			fmt.Printf("Margs: %s\n", margs)
 
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				// Ignore type for now, they will be discussed in "responses"
@@ -94,31 +84,5 @@ var (
 			})
 		},
 	}
-)
 
-func init() {
-	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-		if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
-			h(s, i)
-		}
-	})
-}
-
-func main() {
-	s.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
-		log.Printf("Logged in as: %v#%v", s.State.User.Username, s.State.User.Discriminator)
-	})
-	err := s.Open()
-	if err != nil {
-		log.Fatalf("Cannot open the session: %v", err)
-	}
-
-	defer s.Close()
-
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt)
-	log.Println("Press Ctrl+C to exit")
-	<-stop
-
-	log.Println("Gracefully shutting down.")
 }
