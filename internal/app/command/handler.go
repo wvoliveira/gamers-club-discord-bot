@@ -36,6 +36,11 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 				margs = append(margs, opt.IntValue())
 			}
 
+			var details bool
+			if opt, ok := optionMap["details"]; ok {
+				details = opt.BoolValue()
+			}
+
 			m, err := MatchResult(match_id)
 			if err != nil {
 				msgformat += "> Error: %s\n"
@@ -43,7 +48,7 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 			}
 
 			if err == nil {
-				formatted := MatchFormat(m, true)
+				formatted := MatchFormat(m, details)
 				msgformat += "```text\n%s```\n"
 				margs = append(margs, formatted)
 			}

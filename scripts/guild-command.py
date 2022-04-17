@@ -4,19 +4,19 @@ import requests
 url = "https://discord.com/api/v8/applications/964723752531284068/guilds/910359107582693436/commands"
 
 payloads = [
-    {
-    "name": "demo",
-    "type": 1,
-    "description": "Parse and analyse demos (aka replays).",
-    "options": [
-        {
-            "name": "match_id",
-            "description": "Match number. Ex.: 15693476",
-            "type": 4,
-            "required": True
-        }
-    ]
-    },
+    # {
+    # "name": "demo",
+    # "type": 1,
+    # "description": "Parse and analyse demos (aka replays).",
+    # "options": [
+    #     {
+    #         "name": "match_id",
+    #         "description": "Match number. Ex.: 15693476",
+    #         "type": 4,
+    #         "required": True
+    #     }
+    # ]
+    # },
     {
     "name": "match",
         "type": 1,
@@ -27,6 +27,12 @@ payloads = [
                 "description": "Match number. Ex.: 15693476",
                 "type": 4,
                 "required": True
+            },
+            {
+                "name": "details",
+                "description": "Get details from match.",
+                "type": 5,
+                "required": False
             }
         ]
     }
