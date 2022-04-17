@@ -3,3 +3,5 @@ https://prod-demo-parser-gc-demos.s3.amazonaws.com/2022-04-15__2332__1__15693476
 15693476
 
 https://gamersclub.com.br/lobby/match/15693476/1
+
+https://discord.com/api/oauth2/authorize?client_id=964723752531284068&permissions=2048&scope=bot
