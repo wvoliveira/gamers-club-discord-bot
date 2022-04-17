@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -9,6 +10,11 @@ import (
 func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	return map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"match": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			// Log.
+			event := fmt.Sprintf("id=%s channel_id=%s guild_id=%s guild_locale=%s ", i.ID, i.ChannelID, i.GuildID, i.GuildLocale)
+			event += fmt.Sprintf("locale=%s user=%s nick=%s username=%s", i.Locale, i.User, i.Member.Nick, i.Member.User.Username)
+			log.Println(event)
+
 			// Access options in the order provided by the user.
 			options := i.ApplicationCommandData().Options
 
@@ -25,21 +31,24 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 
 			var match_id int
 			if opt, ok := optionMap["match_id"]; ok {
-				margs = append(margs, opt.IntValue())
 				match_id = int(opt.IntValue())
-				msgformat += "Match %d\n"
+				msgformat += "> Match %d\n"
+				margs = append(margs, opt.IntValue())
 			}
-
-			fmt.Printf("Margs: %d\n", margs)
-			fmt.Printf("Match ID: %d\n", match_id)
 
 			m, err := MatchResult(match_id)
-			if err == nil {
-				margs = append(margs, m.Status)
-				msgformat += "> Status: %s\n"
+			if err != nil {
+				msgformat += "> Error: %s\n"
+				margs = append(margs, err.Error())
 			}
 
-			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+			if err == nil {
+				formatted := MatchFormat(m, true)
+				msgformat += "```text\n%s```\n"
+				margs = append(margs, formatted)
+			}
+
+			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				// Ignore type for now, they will be discussed in "responses"
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
@@ -49,6 +58,9 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 					),
 				},
 			})
+			if err != nil {
+				fmt.Println(err.Error())
+			}
 		},
 		"demo": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			// Access options in the order provided by the user.
