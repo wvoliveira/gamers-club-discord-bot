@@ -11,6 +11,10 @@ import (
 	"github.com/elga-io/discord-bot-gamers-club/internal/app/command"
 )
 
+const (
+	Version = "v0.0.1"
+)
+
 var (
 	BotToken string
 )
