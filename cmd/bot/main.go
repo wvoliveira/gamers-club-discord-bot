@@ -1,40 +1,12 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"os"
 	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/elga-io/discord-bot-gamers-club/internal/app/command"
 )
-
-// Bot parameters
-var (
-	BotToken = flag.String("t", "OTY0NzIzNzUyNTMxMjg0MDY4.YlozAg.popVPCZmhJDdudtW8Czv7I3_jzs", "Bot access token")
-)
-
-var s *discordgo.Session
-
-func init() { flag.Parse() }
-
-func init() {
-	var err error
-	s, err = discordgo.New("Bot " + *BotToken)
-	if err != nil {
-		log.Fatalf("Invalid bot parameters: %v", err)
-	}
-}
-
-func init() {
-	handlers := command.Handlers()
-	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-		if h, ok := handlers[i.ApplicationCommandData().Name]; ok {
-			h(s, i)
-		}
-	})
-}
 
 func main() {
 	s.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
