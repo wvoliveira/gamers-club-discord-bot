@@ -8,8 +8,8 @@ The idea is put all theses function in one project.
 API_URL = "https://discord.com/api/v8/applications"
 TOKEN = "OTY0NzIzNzUyNTMxMjg0MDY4.YlozAg.popVPCZmhJDdudtW8Czv7I3_jzs"
 APP_ID = "964723752531284068"  # Gamers Club app
-GUIL_ID = "910359107582693436"  # elga.io server
-# guild_id = "700713000209743924" # marijuanos
+#GUIL_ID = "910359107582693436"  # elga.io server
+GUIL_ID = "700713000209743924" # marijuanos
 
 DEFAULT_COMMANDS = [{
     "name": "match",
@@ -85,10 +85,12 @@ def create(token, app_id, guild_id, commands, globall=False):
 def main():
     print("Starting script..")
     commands = list(TOKEN, APP_ID, GUIL_ID)
-    for command in commands:
-        status_code = delete(TOKEN, APP_ID, GUIL_ID, command)
-        print(f"command: {command}")
-        print(f"status_code: {status_code}\n")
+    print(f"commands: {commands}")
+
+    # for command in commands:
+    #     status_code = delete(TOKEN, APP_ID, GUIL_ID, command)
+    #     print(f"command: {command}")
+    #     print(f"status_code: {status_code}\n")
 
 
 main()
