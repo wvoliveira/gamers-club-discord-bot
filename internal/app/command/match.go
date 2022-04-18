@@ -3,6 +3,7 @@ package command
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
@@ -18,11 +19,28 @@ func MatchResult(id int) (m entity.Match, err error) {
 		fmt.Printf("error: %s\n", err.Error())
 		return
 	}
-	err = json.NewDecoder(resp.Body).Decode(&m)
+
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Printf("error: %s\n", err.Error())
 		return
 	}
+
+	err = json.Unmarshal(body, &m)
+	if err != nil {
+		fmt.Printf("error: %s\n", err.Error())
+		return
+	}
+
+	if len(m.Games.RawPlayers) > 0 {
+		switch m.Games.RawPlayers[0] {
+		case '{':
+			if err := json.Unmarshal(m.Games.RawPlayers, &m.Games.Players); err != nil {
+				fmt.Printf("error: %s\n", err.Error())
+			}
+		}
+	}
+
 	return
 }
 
@@ -67,14 +85,21 @@ func matchFormatResume(m entity.Match) (text string) {
 
 // matchFormatDetails render details about match.
 func matchFormatDetails(m entity.Match) (text string) {
-	// Team A
-	text += matchTeamTable(m.Games.Players.TeamA)
-	text += fmt.Sprintf("Prob to win: %.2f%%\n", m.ProbWinA)
-	text += "\n"
+	if len(m.Games.Players.TeamA) > 0 {
+		players := m.Games.Players
+		// Team A
+		text += matchTeamTable(players.TeamA)
+		text += fmt.Sprintf("Prob to win: %.2f%%\n", m.ProbWinA)
+		text += "\n"
 
-	// Team B
-	text += matchTeamTable(m.Games.Players.TeamB)
-	text += fmt.Sprintf("Prob to win: %.2f%%\n", m.ProbWinB)
+		// Team B
+		text += matchTeamTable(players.TeamB)
+		text += fmt.Sprintf("Prob to win: %.2f%%\n", m.ProbWinB)
+	}
+
+	if m.Status == "Live" {
+		text += fmt.Sprintln("Jogo em andamento. Espere finalizar para coletar mais informações.")
+	}
 
 	return text
 }

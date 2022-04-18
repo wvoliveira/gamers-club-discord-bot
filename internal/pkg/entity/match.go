@@ -1,5 +1,7 @@
 package entity
 
+import "encoding/json"
+
 // Match root struct for match response.
 // Example: https://gamersclub.com.br/lobby/match/15693476/1
 type Match struct {
@@ -25,12 +27,13 @@ type Match struct {
 }
 
 type Games struct {
-	ScoreA   string  `json:"score_a"`  // "14"
-	ScoreB   string  `json:"score_b"`  // "16"
-	MapName  string  `json:"map_name"` // "de_dust2"
-	Demo     string  `json:"demo"`     //"2022-04-15__2332__1__15693476__de_dust2__timematheus__vs__timeadbrandini.zip"
-	Players  Players `json:"players"`
-	Duration string  `json:"duration"` // "42 Minutos"
+	ScoreA     string          `json:"score_a"`  // "14"
+	ScoreB     string          `json:"score_b"`  // "16"
+	MapName    string          `json:"map_name"` // "de_dust2"
+	Demo       string          `json:"demo"`     //"2022-04-15__2332__1__15693476__de_dust2__timematheus__vs__timeadbrandini.zip"
+	RawPlayers json.RawMessage `json:"players"`
+	Players    Players         `json:"-"`
+	Duration   string          `json:"duration"` // "42 Minutos"
 }
 
 type Players struct {
