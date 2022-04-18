@@ -47,7 +47,12 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 				margs = append(margs, err.Error())
 			}
 
-			if err == nil {
+			if m.ID == "" {
+				msgformat += "```text\n%s```\n"
+				margs = append(margs, "Sorry, match not found.")
+			}
+
+			if err == nil && m.ID != "" {
 				formatted := MatchFormat(m, details)
 				msgformat += "```text\n%s```\n"
 				margs = append(margs, formatted)

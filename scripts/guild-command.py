@@ -1,7 +1,15 @@
 import requests
 
 
-url = "https://discord.com/api/v8/applications/964723752531284068/guilds/910359107582693436/commands"
+# elga.io server
+#url = "https://discord.com/api/v8/applications/964723752531284068/guilds/910359107582693436/commands"
+
+# marijuanos
+# 700713000209743924
+url = "https://discord.com/api/v8/applications/964723752531284068/guilds/700713000209743924/commands"
+
+# global commands
+#url = "https://discord.com/api/v8/applications/964723752531284068/commands"
 
 payloads = [
     # {
