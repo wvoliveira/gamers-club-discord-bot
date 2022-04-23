@@ -1,0 +1,113 @@
+{
+    "provider": {
+            "name": "Counter-Strike: Global Offensive",
+            "appid": 730,
+            "version": 13825,
+            "steamid": "76561198342099054",
+            "timestamp": 1650696739
+    },
+    "map": {
+            "mode": "casual",
+            "name": "de_dust2",
+            "phase": "live",
+            "round": 5,
+            "team_ct": {
+                    "score": 2,
+                    "consecutive_round_losses": 1,
+                    "timeouts_remaining": 1,
+                    "matches_won_this_series": 0
+            },
+            "team_t": {
+                    "score": 3,
+                    "consecutive_round_losses": 1,
+                    "timeouts_remaining": 1,
+                    "matches_won_this_series": 0
+            },
+            "num_matches_to_win_series": 0,
+            "current_spectators": 0,
+            "souvenirs_total": 0
+    },
+    "round": {
+            "phase": "live"
+    },
+    "player": {
+            "steamid": "76561198342099054",
+            "name": "D U S G",
+            "team": "T",
+            "activity": "playing",
+            "state": {
+                    "health": 100,
+                    "armor": 100,
+                    "helmet": true,
+                    "flashed": 0,
+                    "smoked": 0,
+                    "burning": 0,
+                    "money": 4650,
+                    "round_kills": 0,
+                    "round_killhs": 0,
+                    "equip_value": 4700
+            },
+            "weapons": {
+                    "weapon_0": {
+                            "name": "weapon_knife_t",
+                            "paintkit": "default",
+                            "type": "Knife",
+                            "state": "holstered"
+                    },
+                    "weapon_1": {
+                            "name": "weapon_glock",
+                            "paintkit": "hy_nerodia",
+                            "type": "Pistol",
+                            "ammo_clip": 20,
+                            "ammo_clip_max": 20,
+                            "ammo_reserve": 120,
+                            "state": "holstered"
+                    },
+                    "weapon_2": {
+                            "name": "weapon_ak47",
+                            "paintkit": "default",
+                            "type": "Rifle",
+                            "ammo_clip": 30,
+                            "ammo_clip_max": 30,
+                            "ammo_reserve": 90,
+                            "state": "active"
+                    },
+                    "weapon_3": {
+                            "name": "weapon_hegrenade",
+                            "paintkit": "default",
+                            "type": "Grenade",
+                            "ammo_reserve": 1,
+                            "state": "holstered"
+                    },
+                    "weapon_4": {
+                            "name": "weapon_smokegrenade",
+                            "paintkit": "default",
+                            "type": "Grenade",
+                            "ammo_reserve": 1,
+                            "state": "holstered"
+                    },
+                    "weapon_5": {
+                            "name": "weapon_flashbang",
+                            "paintkit": "default",
+                            "type": "Grenade",
+                            "ammo_reserve": 1,
+                            "state": "holstered"
+                    }
+            },
+            "match_stats": {
+                    "kills": 11,
+                    "assists": 0,
+                    "deaths": 3,
+                    "mvps": 1,
+                    "score": 22
+            }
+    },
+    "previously": {
+            "round": {
+                    "phase": "freezetime"
+            }
+    },
+    "auth": {
+            "token": "CCWJu64ZV3JHDT8hZc"
+    }
+}

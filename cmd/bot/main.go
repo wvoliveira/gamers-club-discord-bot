@@ -9,6 +9,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/elga-io/discord-bot-gamers-club/internal/app/command"
+	"github.com/elga-io/discord-bot-gamers-club/internal/app/si"
 )
 
 const (
@@ -16,28 +17,44 @@ const (
 )
 
 var (
-	BotToken string
+	botToken string
+	api      bool
+	apiPort  string
+	apiToken string
 )
 
 func init() {
-	flag.StringVar(&BotToken, "t", "", "Bot access token")
+	flag.StringVar(&botToken, "t", "", "Bot access token")
+	flag.BoolVar(&api, "a", false, "Start a web API for receive actions from CS GO.")
+	flag.StringVar(&apiPort, "ap", "8080", "API port. Default 8080")
+	flag.StringVar(&apiToken, "at", "CCWJu64ZV3JHDT8hZc", "API token for authentication. Default: CCWJu64ZV3JHDT8hZc")
 	flag.Parse()
 
-	if BotToken == "" {
+	if botToken == "" {
 		bt, ok := os.LookupEnv("DISCORD_BOT_GC_TOKEN")
 		if ok {
-			BotToken = bt
+			botToken = bt
 		}
-		if BotToken == "" {
-			fmt.Println("You must set token for Discord API connection.")
-			fmt.Println("With -t flag or DISCORD_BOT_GC_TOKEN env variable.")
+		if botToken == "" && !api {
+			fmt.Println("You must set token for Discord API with -t flag or start API with -a flag.")
 			os.Exit(3)
 		}
 	}
 }
 
 func main() {
-	ds, err := discordgo.New("Bot " + BotToken)
+	log.Println("Starting bot app..")
+
+	if botToken != "" {
+		go discord()
+	}
+	if api {
+		si.API(apiPort, apiToken)
+	}
+}
+
+func discord() {
+	ds, err := discordgo.New("Bot " + botToken)
 	if err != nil {
 		log.Fatalf("Invalid bot parameters: %v", err)
 	}

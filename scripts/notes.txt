@@ -1,0 +1,17 @@
+# Windows
+docker run -d -p 27015:27015/udp -p 27015:27015/tcp -p 27020:27020/udp -p 27005:27005/udp -v csgo-1:/home/steam/csgo-dedicated/ --name=csgo-1 -e SRCDS_TOKEN="AE7306AAAAA0208ADE51A19160F35031" -e SRCDS_RCONPW="BTBnFHkY64GG3nRw" -e SRCDS_PW="n59vzkFXjQ" -e SRCDS_NET_PUBLIC_ADDRESS="189.69.7.171" -e SRCDS_MAXPLAYERS=12 -e SRCDS_HOSTNAME="Bora jogar" -e ADDITIONAL_ARGS="-insecure" cm2network/csgo
+
+.\srcds.exe -game csgo -console -usercon +game_type 1 +game_mode 2 +mapgroup mg_allclassic +map de_dust2 +sv_setsteamaccount "AE7306AAAAA0208ADE51A19160F35031" +net_public_adr "189.69.7.171" -maxplayers_override "12"
+
+# Linux
+docker run -d --network host -v csgo-1:/home/steam/csgo-dedicated/ --name=csgo-1 -e SRCDS_TOKEN="AE7306AAAAA0208ADE51A19160F35031" -e SRCDS_RCONPW="BTBnFHkY64GG3nRw" -e SRCDS_PW="n59vzkFXjQ" -e SRCDS_NET_PUBLIC_ADDRESS="189.69.7.171" -e SRCDS_MAXPLAYERS=12 -e SRCDS_HOSTNAME="Bora jogar" -e ADDITIONAL_ARGS="-insecure" cm2network/csgo
+
+To clarify, Source servers have 4 ports they use:
+    hostport, specified via -port on the command line. Default: 27015. On TCP, this is used for rcon. On UDP, this is used for A2S information queries to the server, including getting the...
+    clientport, specified via -clientport on the command-line. Default: 27005. On UDP, used for client connections.
+    steam port, specified via -sport or -steamport on the command-line. Default: 26900... but really uses 26901 on most games. On UDP, communicates with the Steam servers.
+    SourceTV port, specified via +tv_port on the command line. Default: 27020. On UDP, used for client connections for SourceTV. -nohltv will disable this port entirely.
+
+On most game servers, -strictportbind will make the server error out if it tries to start on an already used port. CS:GO uses a different command for this (if anyone knows it, feel free to chime in). If this isn't set, the server may rebind to a higher port when you restart it if it thinks the previous instance hasn't shut down yet.
+
+Now, there are other issues with CS:GO. Specifically, -ip likely needs to be set to your real IP, while +net_addr needs to be set to your external IP.
