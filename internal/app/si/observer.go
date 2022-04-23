@@ -1,11 +1,13 @@
 package si
 
-type observerSingle struct {
-	Provider   provider   `json:"provider"`
-	Map        mapp       `json:"map"`
-	Round      round      `json:"round"`
-	Player     player     `json:"player"`
-	Previously previously `json:"previously"`
+type observer struct {
+	Provider        provider        `json:"provider"`
+	Map             mapp            `json:"map"`
+	Round           round           `json:"round"`
+	Player          player          `json:"player"`
+	PhaseCountdowns phaseCountdowns `json:"phase_countdowns"`
+	Grenades        grenades        `json:"grenades"`
+	Previously      previously      `json:"previously"`
 	// Auth auth `json:"auth"` // Maybe we dont need this here.
 }
 
@@ -39,7 +41,8 @@ type team struct {
 }
 
 type round struct {
-	Phase string `json:"phase"` // "live"
+	Phase   string `json:"phase"`    // "live", "over"
+	WinTeam string `json:"win_team"` // "CT"
 }
 
 type player struct {
@@ -95,6 +98,13 @@ type playerMatchStats struct {
 	Mvps    int `json:"mvps"`    // 1,
 	Score   int `json:"score"`   // 22
 }
+
+type phaseCountdowns struct {
+	Phase       string `json:"phase"`         // "over",
+	PhaseEndsIn string `json:"phase_ends_in"` // "2.3"
+}
+
+type grenades struct{}
 
 type previously struct {
 	Round  round  `json:"round"`

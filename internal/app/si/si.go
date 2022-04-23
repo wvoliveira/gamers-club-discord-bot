@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"flag"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -57,7 +56,7 @@ func API(port, token string) {
 	},
 	)
 
-	// Parse POST data. Single service route.
+	// Service route.
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 
@@ -66,14 +65,14 @@ func API(port, token string) {
 			log.Fatalln(err)
 		}
 
-		os := observerSingle{}
-		err = json.Unmarshal(data, &os)
+		ob := observer{}
+		err = json.Unmarshal(data, &ob)
 		if err != nil && !errors.Is(err, io.EOF) {
 			log.Println(err.Error())
 		}
 
-		fmt.Println(os.Player.Name)
-		//log.Printf("data: %s", string(data))
+		//fmt.Println(os.Player.Name)
+		log.Printf("data: %s", string(data))
 
 	}).Methods("POST")
 
