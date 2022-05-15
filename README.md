@@ -1,7 +1,11 @@
-# GCBOT
+<p align="center">
+<img src=".github/gc-logo.png" width="80" height="80">
+<img src=".github/plus.png" width="80" height="80">
+<img src=".github/discord-logo.png" width="80" height="80">
+</p>
 
-<img src=".github/gc-logo.png" width="100" height="100">
-<img src=".github/discord-logo.png" width="100" height="100">
+
+# GCBOT
 
 Discord bot to get matches information from the Gamers Club.
 
