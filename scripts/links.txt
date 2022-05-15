@@ -1,7 +1,0 @@
-https://prod-demo-parser-gc-demos.s3.amazonaws.com/2022-04-15__2332__1__15693476__de_dust2__timematheus__vs__timeadbrandini.zip
-
-15693476
-
-https://gamersclub.com.br/lobby/match/15693476/1
-
-https://discord.com/api/oauth2/authorize?client_id=964723752531284068&permissions=294205271040&scope=bot%20applications.commands

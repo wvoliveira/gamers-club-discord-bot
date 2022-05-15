@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -13,7 +12,7 @@ import (
 )
 
 const (
-	Version = "v0.0.1"
+	version = "v0.0.1"
 )
 
 var (
@@ -25,19 +24,15 @@ var (
 
 func init() {
 	flag.StringVar(&botToken, "t", "", "Bot access token")
-	flag.BoolVar(&api, "a", false, "Start a web API for receive actions from CS GO.")
-	flag.StringVar(&apiPort, "ap", "8080", "API port. Default 8080")
-	flag.StringVar(&apiToken, "at", "CCWJu64ZV3JHDT8hZc", "API token for authentication. Default: CCWJu64ZV3JHDT8hZc")
 	flag.Parse()
 
 	if botToken == "" {
-		bt, ok := os.LookupEnv("DISCORD_BOT_GC_TOKEN")
+		bt, ok := os.LookupEnv("GCBOT_TOKEN")
 		if ok {
 			botToken = bt
-		}
-		if botToken == "" && !api {
-			fmt.Println("You must set token for Discord API with -t flag or start API with -a flag.")
-			os.Exit(3)
+		} else {
+			print("You must set token for Discord BOT.")
+			os.Exit(2)
 		}
 	}
 }

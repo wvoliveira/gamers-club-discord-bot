@@ -6,7 +6,7 @@ The idea is put all theses function in one project.
 """
 
 API_URL = "https://discord.com/api/v8/applications"
-TOKEN = "OTY0NzIzNzUyNTMxMjg0MDY4.YlozAg.popVPCZmhJDdudtW8Czv7I3_jzs"
+TOKEN = "<discord token>"
 APP_ID = "964723752531284068"  # Gamers Club app
 #GUIL_ID = "910359107582693436"  # elga.io server
 GUIL_ID = "700713000209743924" # marijuanos

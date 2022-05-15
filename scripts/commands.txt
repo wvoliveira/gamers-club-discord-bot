@@ -1,4 +1,0 @@
-rcon mp_restartgame 2
-rcon exec warmup.cfg
-rcon exec knife.cfg
-rcon exec live.cfg

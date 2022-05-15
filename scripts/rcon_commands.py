@@ -1,8 +1,8 @@
 from rcon.source import Client
 
-ENDPOINT = "borajogarcs.ddns.net"
+ENDPOINT = "<dns or ip of cs server>"
 PORT = 27015
-PASSWORD = "CCWJu64ZV3JHDT8hZc"
+PASSWORD = "<rcon password>"
 
 with Client(ENDPOINT, PORT, passwd=PASSWORD) as client:
     response = client.run('status')
@@ -11,4 +11,3 @@ with Client(ENDPOINT, PORT, passwd=PASSWORD) as client:
     print(response)
     response = client.run('stats')
     print(response)
-
