@@ -7,8 +7,8 @@ import (
 	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/app/command"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/app/si"
+	"github.com/wvoliveira/gcbot/internal/app/command"
+	"github.com/wvoliveira/gcbot/internal/app/si"
 )
 
 const (

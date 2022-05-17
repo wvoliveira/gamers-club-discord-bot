@@ -1,4 +1,4 @@
-module github.com/wvoliveira/discord-bot-gamers-club
+module github.com/wvoliveira/gcbot
 
 go 1.18
 
