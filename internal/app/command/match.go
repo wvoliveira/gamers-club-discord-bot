@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/elga-io/discord-bot-gamers-club/internal/pkg/co"
-	"github.com/elga-io/discord-bot-gamers-club/internal/pkg/entity"
 	"github.com/olekukonko/tablewriter"
+	"github.com/wvoliveira/discord-bot-gamers-club/internal/pkg/co"
+	"github.com/wvoliveira/discord-bot-gamers-club/internal/pkg/entity"
 )
 
 // MatchResult get information from match.

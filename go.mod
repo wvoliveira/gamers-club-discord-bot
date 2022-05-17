@@ -1,4 +1,4 @@
-module github.com/elga-io/discord-bot-gamers-club
+module github.com/wvoliveira/discord-bot-gamers-club
 
 go 1.18
 
