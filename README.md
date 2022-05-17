@@ -1,7 +1,5 @@
 <p align="center">
-<img src=".github/gc-logo.png" width="80" height="80">
-<img src=".github/plus.png" width="80" height="80">
-<img src=".github/discord-logo.png" width="80" height="80">
+<img src=".github/banner.jpg" width="250">
 </p>
 
 
