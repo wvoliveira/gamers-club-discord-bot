@@ -7,8 +7,8 @@ before:
     # you may remove this if you don't need go generate
     - go generate ./...
 builds:
-  - 
-    main: ./cmd/bot/
+  - main: ./cmd/bot/
+    binary: gcbot
     env:
       - CGO_ENABLED=0
     goos:
@@ -16,17 +16,14 @@ builds:
       - windows
       - darwin
     goarch:
-      - 386
       - amd64
       - arm
       - arm64
     goarm:
-      - 5
       - 6
       - 7
 archives:
   - replacements:
-      386: i386
       amd64: x86_64
 checksum:
   name_template: 'checksums.txt'
