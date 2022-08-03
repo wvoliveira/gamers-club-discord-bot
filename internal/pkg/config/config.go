@@ -1,12 +1,29 @@
 package config
 
 import (
-	"errors"
 	"log"
-	"os"
 	"path"
 
 	"github.com/mitchellh/go-homedir"
+)
+
+var (
+	homeFolder string
+
+	configFiles []string = []string{
+		path.Join(homeFolder, ".gcbot/gcbot.yaml"),
+		"/etc/gcbot/gcbot.yaml",
+	}
+
+	defaultConfig = Config{
+		ConfigBot{
+			Token: "",
+		},
+
+		ConfigAPI{
+			Port: 8080,
+		},
+	}
 )
 
 type Config struct {
@@ -25,21 +42,15 @@ type ConfigAPI struct {
 	Port int `yaml:"port"`
 }
 
-func loadConfig(file string) (config Config) {
+func init() {
 	home, err := homedir.Dir()
 	if err != nil {
 		log.Fatal(err)
 	}
+	homeFolder = home
+}
 
-	folder := path.Join(home, ".gcbot")
-	_, err = os.Stat(folder)
-
-	if errors.Is(err, os.ErrNotExist) {
-		_, err = os.Create(folder)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
+func LoadFile(file string) (config Config) {
 
 	// configFile := path.Join(folder, file)
 
