@@ -1,55 +1,23 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"os"
 	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/wvoliveira/gcbot/internal/app/command"
-	"github.com/wvoliveira/gcbot/internal/app/si"
+	"github.com/wvoliveira/gcbot/internal/pkg/config"
 )
-
-const (
-	version = "v0.0.1"
-)
-
-var (
-	botToken string
-	api      bool
-	apiPort  string
-	apiToken string
-)
-
-func init() {
-	flag.StringVar(&botToken, "t", "", "Bot access token")
-	flag.Parse()
-
-	if botToken == "" {
-		bt, ok := os.LookupEnv("GCBOT_TOKEN")
-		if ok {
-			botToken = bt
-		} else {
-			print("You must set token for Discord BOT.")
-			os.Exit(2)
-		}
-	}
-}
 
 func main() {
 	log.Println("Starting bot app..")
-
-	if botToken != "" {
-		go discord()
-	}
-	if api {
-		si.API(apiPort, apiToken)
-	}
+	cfg := config.New()
+	discord(cfg.Token)
 }
 
-func discord() {
-	ds, err := discordgo.New("Bot " + botToken)
+func discord(token string) {
+	ds, err := discordgo.New(token)
 	if err != nil {
 		log.Fatalf("Invalid bot parameters: %v", err)
 	}

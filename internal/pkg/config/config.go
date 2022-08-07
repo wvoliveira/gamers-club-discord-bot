@@ -1,68 +1,42 @@
 package config
 
 import (
+	"flag"
 	"log"
-	"path"
-
-	"github.com/mitchellh/go-homedir"
+	"os"
 )
 
 var (
-	homeFolder string
-
-	configFiles []string = []string{
-		path.Join(homeFolder, ".gcbot/gcbot.yaml"),
-		"/etc/gcbot/gcbot.yaml",
-	}
-
 	defaultConfig = Config{
-		ConfigBot{
-			Token: "",
-		},
-
-		ConfigAPI{
-			Port: 8080,
-		},
+		Token: "",
 	}
 )
 
 type Config struct {
-	Bot ConfigBot `yaml:"Bot"`
-	API ConfigAPI `yaml:"API"`
-}
-
-type ConfigBot struct {
 	// This is a Discord Token
 	// Check the follow link for more:
 	// https://discord.com/developers/docs/getting-started#adding-credentials
-	Token string `yaml:"token"`
+	Token string
 }
 
-type ConfigAPI struct {
-	Port int `yaml:"port"`
-}
-
-func init() {
-	home, err := homedir.Dir()
-	if err != nil {
-		log.Fatal(err)
+func (c *Config) loadEnv() {
+	if bt, ok := os.LookupEnv("GCBOT_TOKEN"); ok {
+		c.Token = bt
 	}
-	homeFolder = home
 }
 
-func LoadFile(file string) (config Config) {
+func (c *Config) loadFlags() {
+	flag.StringVar(&c.Token, "t", c.Token, "Bot access token")
+	flag.Parse()
+}
 
-	// configFile := path.Join(folder, file)
+func New() (c Config) {
+	c.loadEnv()
+	c.loadFlags()
 
-	// cfg, err := ini.Load(path.Join(folder, file))
-	// if err != nil {
-	// 	log.Printf("Fail to read file: %v", err)
-	// 	os.Exit(1)
-	// }
-
+	if c.Token == "" {
+		log.Println("Token is required. Use GCBOT_TOKEN or with -t flag.")
+		os.Exit(2)
+	}
 	return
-}
-
-func NewBot() Config {
-	return Config{}
 }
