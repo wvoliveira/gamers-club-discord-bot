@@ -24,6 +24,11 @@ func discord(token string) {
 
 	handlers := command.Handlers()
 	ds.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+		// Log all struct in *discordgo.InteractionCreate
+		// This useful because this struct is a bit crazy.
+		// I need check if some fields is nil or similar type.
+		command.LogEvent(i)
+
 		if h, ok := handlers[i.ApplicationCommandData().Name]; ok {
 			h(s, i)
 		}
