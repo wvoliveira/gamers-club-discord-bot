@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/olekukonko/tablewriter"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/pkg/co"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/pkg/entity"
+	"github.com/wvoliveira/gcbot/internal/pkg/co"
+	"github.com/wvoliveira/gcbot/internal/pkg/entity"
 )
 
 // MatchResult get information from match.

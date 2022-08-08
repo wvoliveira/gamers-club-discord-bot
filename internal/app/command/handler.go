@@ -10,11 +10,6 @@ import (
 func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	return map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"match": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-			// Log.
-			event := fmt.Sprintf("id=%s channel_id=%s guild_id=%s guild_locale=%s ", i.ID, i.ChannelID, i.GuildID, i.GuildLocale)
-			event += fmt.Sprintf("locale=%s user=%s nick=%s username=%s", i.Locale, i.User, i.Member.Nick, i.Member.User.Username)
-			log.Println(event)
-
 			// Access options in the order provided by the user.
 			options := i.ApplicationCommandData().Options
 
@@ -41,6 +36,8 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 				details = opt.BoolValue()
 			}
 
+			// Get match result from GamersClub API.
+			// TODO: create more resilient struct for this job.
 			m, err := MatchResult(match_id)
 			if err != nil {
 				msgformat += "> Error: %s\n"
@@ -69,7 +66,7 @@ func Handlers() map[string]func(s *discordgo.Session, i *discordgo.InteractionCr
 				},
 			})
 			if err != nil {
-				fmt.Println(err.Error())
+				log.Println(err.Error())
 			}
 		},
 		"demo": func(s *discordgo.Session, i *discordgo.InteractionCreate) {

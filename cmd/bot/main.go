@@ -1,61 +1,34 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"os"
 	"os/signal"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/app/command"
-	"github.com/wvoliveira/discord-bot-gamers-club/internal/app/si"
+	"github.com/wvoliveira/gcbot/internal/app/command"
+	"github.com/wvoliveira/gcbot/internal/pkg/config"
 )
-
-const (
-	version = "v0.0.1"
-)
-
-var (
-	botToken string
-	api      bool
-	apiPort  string
-	apiToken string
-)
-
-func init() {
-	flag.StringVar(&botToken, "t", "", "Bot access token")
-	flag.Parse()
-
-	if botToken == "" {
-		bt, ok := os.LookupEnv("GCBOT_TOKEN")
-		if ok {
-			botToken = bt
-		} else {
-			print("You must set token for Discord BOT.")
-			os.Exit(2)
-		}
-	}
-}
 
 func main() {
 	log.Println("Starting bot app..")
-
-	if botToken != "" {
-		go discord()
-	}
-	if api {
-		si.API(apiPort, apiToken)
-	}
+	cfg := config.New()
+	discord(cfg.Token)
 }
 
-func discord() {
-	ds, err := discordgo.New("Bot " + botToken)
+func discord(token string) {
+	ds, err := discordgo.New(token)
 	if err != nil {
 		log.Fatalf("Invalid bot parameters: %v", err)
 	}
 
 	handlers := command.Handlers()
 	ds.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+		// Log all struct in *discordgo.InteractionCreate
+		// This useful because this struct is a bit crazy.
+		// I need check if some fields is nil or similar type.
+		command.LogEvent(i)
+
 		if h, ok := handlers[i.ApplicationCommandData().Name]; ok {
 			h(s, i)
 		}
